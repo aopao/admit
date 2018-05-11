@@ -11,5 +11,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class College extends Model
 {
-    //
+
+	public function province()
+	{
+		return $this->belongsTo(Province::class);
+	}
+
+	public function CollegeCategory()
+	{
+		return $this->belongsTo(CollegeCategory::class);
+	}
 }

@@ -15,6 +15,9 @@ Route::get('/' , function() {
 	return view('welcome');
 });
 
+#前后端用户判断跳转路径
+Route::get('/redirect' , 'Auth\RedirectController@index');
+
 include_once __DIR__ . '/agent.php';
 
 include_once __DIR__ . '/admin.php';

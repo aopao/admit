@@ -8,9 +8,11 @@ return [
 	|--------------------------------------------------------------------------
 	*/
 	'create_student' => '添加学生' ,
+	'edit_student'=>'修改学生信息',
 	'list_student' => '学生列表' ,
 	'manage_student' => '学生管理' ,
 	'profie_info' => '个人信息详情' ,
+	'student_info'=>'学生信息',
 	'back_student_list' => '返回学生管理' ,
 	'student_basic_info' => '学生基本信息' ,
 	'student_score_info' => '学生预估成绩信息' ,
@@ -19,6 +21,8 @@ return [
 	'student_active_info' => '学生授权查询信息' ,
 	'search_tips' => '学生姓名/手机号/身份证' ,
 	'student_name' => '学生姓名' ,
+	'planner'=>'规划师',
+	'change_planner'=>'更换规划师',
 	'sex' => '性&nbsp;&nbsp;&nbsp;&nbsp;别' ,
 	'male' => '男' ,
 	'female' => '女' ,
@@ -61,5 +65,6 @@ return [
 	'created_at' => '创建日期' ,
 	'active_date' => '注册激活日期' ,
 	'expiration_time' => '授权查询截至日期' ,
+	'no_expiration_time'=>'终身',
 	'orselect'=>'可不选',
 ];

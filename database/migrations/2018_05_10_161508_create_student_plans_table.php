@@ -17,7 +17,7 @@ class CreateStudentPlansTable extends Migration
 			$table->increments('id');
 			$table->integer('user_id')->index()->default(0)->comment('属于哪个用户ID');
 			$table->integer('student_id')->index();
-			$table->integer('plan_type')->index()->default(0)->comment('估分方案类型');
+			$table->integer('plan_id')->index()->default(0)->comment('估分方案类型');
 			$table->string('plan_name')->index();
 			$table->string('plan_number')->index()->default(0)->comment('计划序号');
 			$table->string('plan_query')->default(0)->comment('方案查询条件');

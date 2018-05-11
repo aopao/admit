@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Config;
 
 /**
- * Class SettingRepository
+ * Class ConfigRepository
  * @package App\Repositories
  */
 class ConfigRepository
@@ -16,7 +16,7 @@ class ConfigRepository
 	private $config;
 
 	/**
-	 * SettingRepository constructor.
+	 * ConfigRepository constructor.
 	 * @param $config $config
 	 */
 	public function __construct(Config $config)

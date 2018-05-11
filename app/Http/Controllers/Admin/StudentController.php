@@ -7,14 +7,28 @@ use App\Http\Requests\StudentRequest;
 use App\Repositories\StudentRepository;
 use App\Repositories\ProvinceRepository;
 
+/**
+ * Class StudentController
+ * @package App\Http\Controllers\Admin
+ */
 class StudentController extends BaseController
 {
+	/**
+	 * @var StudentRepository
+	 */
 	private $student;
+	private $province;
 
-	public function __construct(StudentRepository $studentRepository)
+	/**
+	 * StudentController constructor.
+	 * @param StudentRepository $studentRepository
+	 * @param ProvinceRepository $provinceRepository
+	 */
+	public function __construct(StudentRepository $studentRepository , ProvinceRepository $provinceRepository)
 	{
 		parent::__construct();
 		$this->student = $studentRepository;
+		$this->province = $provinceRepository;
 	}
 
 	/**
@@ -31,68 +45,73 @@ class StudentController extends BaseController
 		} else {
 			$student_list = $this->student->getAll();
 		}
-
 		return view('admins.student.index' , compact('student_list'));
 	}
 
 	/**
 	 * Show the form for creating a new resource.
 	 *
-	 * @param ProvinceRepository $provinceRepository
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create(ProvinceRepository $provinceRepository)
+	public function create()
 	{
 		# 获取省份列表
-		$province_list = $provinceRepository->getAll();
+		$province_list = $this->province->getAll();
 		return view('admins.student.create' , compact('province_list'));
 	}
 
+
 	/**
-	 * Store a newly created resource in storage.
-	 *
 	 * @param StudentRequest $studentRequest
-	 * @return void
+	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
 	 */
 	public function store(StudentRequest $studentRequest)
 	{
 		if ($this->student->store($studentRequest->all())) {
-			return redirect(route('admin.student.index'));
+			return redirect(route('admin.student.index'))->with('message' , '添加成功!');
 		}
 	}
 
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  \App\Models\Student $student
+	 * @param $student_id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(Student $student)
+	public function show($student_id)
 	{
-		//
+		$student_info = $this->student->isAvailable($student_id , true);
+		# 获取省份列表
+		$province_list = $this->province->getAll();
+		return view('admins.student.show' , compact('' , 'student_info' , 'province_list'));
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  \App\Models\Student $student
+	 * @param $student_id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(Student $student)
+	public function edit($student_id)
 	{
-		//
+		$student_info = $this->student->isAvailable($student_id , true);
+		# 获取省份列表
+		$province_list = $this->province->getAll();
+		return view('admins.student.edit' , compact('' , 'student_info' , 'province_list'));
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request $request
-	 * @param  \App\Models\Student $student
+	 * @param StudentRequest $studentRequest
+	 * @param $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request , Student $student)
+	public function update(StudentRequest $studentRequest , $id)
 	{
-		//
+		if ($this->student->update($studentRequest->all() , $id)) {
+			return redirect(route('admin.student.index'))->with('message' , '修改成功!');
+		}
 	}
 
 	/**
@@ -101,7 +120,7 @@ class StudentController extends BaseController
 	 * @param  \App\Models\Student $student
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(Student $student)
+	public function destroy()
 	{
 		//
 	}

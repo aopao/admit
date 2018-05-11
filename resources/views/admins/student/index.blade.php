@@ -1,7 +1,10 @@
 @extends('layouts.layout')
+@section('page-css')
+    <link rel="stylesheet" href="{{ asset('theme/vendor/toastr/toastr.css') }}">
+@endsection
 @section('content')
     <div class="page-header">
-        <h1 class="page-title"><i class="icon wb-user"></i>@lang('student.list_student')</h1>
+        <h1 class="page-title"><i class="icon wb-users"></i>@lang('student.list_student')</h1>
     </div>
     <div class="page-content">
         <div class="panel">
@@ -26,8 +29,8 @@
                 </div>
             </div>
             <div class="panel-body pt-0">
-                <!-- Example Table Selectable -->
-                <div class="example mt--1">
+                <!-- Table Selectable -->
+                <div class="mt--1">
                     <form action="">
                         <table class="table table-hover table-bordered table-striped">
                             <thead>
@@ -38,10 +41,10 @@
                             </span>
                                 </th>
                                 <th>@lang('form.id')</th>
-                                <th>@lang('student.name')</th>
-                                <th>@lang('student.province')</th>
+                                <th>@lang('student.student_name')</th>
+                                <th>@lang('student.exam_address_province_id')</th>
                                 <th>@lang('student.mobile')</th>
-                                <th class="hidden-sm-down">@lang('student.card')</th>
+                                <th class="hidden-sm-down">@lang('student.id_card')</th>
                                 <th>@lang('student.planner')</th>
                                 <th class="hidden-sm-down">@lang('form.created_at')</th>
                                 <th>@lang('form.action')</th>
@@ -52,16 +55,16 @@
                                 @foreach($student_list as $student)
                                     <tr align="center">
                                         <td>
-                            <span class="checkbox-custom checkbox-primary">
-                              <input class="selectable-item" type="checkbox" id="row-{{ $student['id'] }}" value="{{ $student['id'] }}"><label for="row-{{ $student['id'] }}"></label>
-                            </span>
+                                            <span class="checkbox-custom checkbox-primary">
+                                              <input class="selectable-item" type="checkbox" id="row-{{ $student['id'] }}" value="{{ $student['id'] }}"><label for="row-{{ $student['id'] }}"></label>
+                                            </span>
                                         </td>
-                                        <td>{{ $student['id'] }}</td>
-                                        <td>{{ $student['name'] }}</td>
-                                        <td>{{ $student['province']['name'] }}</td>
-                                        <td>{{ $student['mobile'] }}</td>
-                                        <td class="hidden-sm-down">{{ $student['card'] }}</td>
-                                        <td>{{ $student['user']['nickname'] }}</td>
+                                        <td>{{ $student['id'] or ''}}</td>
+                                        <td>{{ $student['student_name'] or ''}}</td>
+                                        <td>{{ $student['province']['name'] or '未填写'}}</td>
+                                        <td>{{ $student['mobile'] or '未填写'}}</td>
+                                        <td class="hidden-sm-down">{{ $student['card'] or '未填写'}}</td>
+                                        <td>{{ $student['user']['nickname'] or '未填写'}}</td>
                                         <td class="hidden-sm-down">{{ $student['created_at']  }}</td>
                                         <td>
                                             <a href="{{route('admin.student.show',['id'=>$student['id']])}}" class="btn btn-outline btn-success btn-xs"><i class="icon wb-eye" aria-hidden="true"></i></a>
@@ -78,7 +81,7 @@
                 <div class="card-block p-0">
                     <div class="project-controls clearfix" style="border: none">
                         <div class="float-left">
-                            <a href="{{ route('admin.student.create') }}" class="btn btn-outline btn-success btn-sm">@lang('student.change_agent')</a>
+                            <a href="{{ route('admin.student.create') }}" class="btn btn-outline btn-success btn-sm">@lang('student.change_planner')</a>
                             <a href="{{ route('admin.student.create') }}" class="btn btn-outline btn-danger btn-sm">@lang('form.delete')</a>
                         </div>
                         <div class="float-right">
@@ -92,8 +95,16 @@
                         </div>
                     </div>
                 </div>
-                <!-- End Example Table Selectable -->
+                <!-- End Table Selectable -->
             </div>
         </div>
     </div>
+@endsection
+@section('page-js')
+    <script src="{{ asset('theme/vendor/toastr/toastr.js') }}"></script>
+    <script>
+        @if(Session::has('message'))
+        toastr.success('{{Session::get("message")}}', '');
+        @endif
+    </script>
 @endsection

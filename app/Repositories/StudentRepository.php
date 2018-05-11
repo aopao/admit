@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Student;
 
 /**
- * Class SettingRepository
+ * Class StudentRepository
  * @package App\Repositories
  */
 class StudentRepository
@@ -16,7 +16,7 @@ class StudentRepository
 	private $student;
 
 	/**
-	 * SettingRepository constructor.
+	 * StudentRepository constructor.
 	 * @param $student $student
 	 */
 	public function __construct(Student $student)
@@ -51,12 +51,67 @@ class StudentRepository
 	 */
 	public function store(array $student_info)
 	{
-		$student_info[ 'intention_college' ] = $this->tranFormIntentionCollegeArrayToJson($student_info[ 'intention_college' ]);
-		$student_info[ 'intention_major' ] = $this->tranFormIntentionMajorStringToJson($student_info[ 'intention_major' ]);
-		print_r($student_info);
+		if (isset($student_info[ 'intention_college' ])) {
+			$student_info[ 'intention_college' ] = $this->tranFormIntentionCollegeArrayToJson($student_info[ 'intention_college' ]);
+		}
+		if (isset($student_info[ 'intention_major' ])) {
+			$student_info[ 'intention_major' ] = $this->tranFormIntentionMajorStringToJson($student_info[ 'intention_major' ]);
+		}
+		return $this->student->create($student_info)->save();
+	}
 
-		exit();
-//		return $this->student->create($student_info)->save();
+	/**
+	 * @param $student_id
+	 */
+	public function getStudentById($student_id)
+	{
+		$this->isAvailable($student_id);
+	}
+
+
+	public function getStudentByIdWithProvinceAndUser($student_id)
+	{
+		return $this->student->with('province' , 'user')->find($student_id);
+	}
+
+	/**
+	 * @param $student_id
+	 * @param bool $slug
+	 * @return mixed|static
+	 */
+	public function isAvailable($student_id , $slug = false)
+	{
+		$student_info = $this->student->find($student_id);
+		if (!$student_info) {
+			abort(404);
+		} else {
+			if ($slug) {
+				if (isset($student_info[ 'intention_college' ])) {
+					$student_info[ 'intention_college' ] = $this->tranFormIntentionCollegeJsonToArray($student_info[ 'intention_college' ]);
+				}
+				if (isset($student_info[ 'intention_major' ])) {
+					$student_info[ 'intention_major' ] = $this->tranFormIntentionMajorJsonToString($student_info[ 'intention_major' ]);
+				}
+			}
+			return $student_info;
+		}
+	}
+
+	/**
+	 * @param array $student_info
+	 * @param $id
+	 * @return bool
+	 */
+	public function update(array $student_info , $id)
+	{
+		$student = $this->student->find($id);
+		if (isset($student_info[ 'intention_college' ])) {
+			$student_info[ 'intention_college' ] = $this->tranFormIntentionCollegeArrayToJson($student_info[ 'intention_college' ]);
+		}
+		if (isset($student_info[ 'intention_major' ])) {
+			$student_info[ 'intention_major' ] = $this->tranFormIntentionMajorStringToJson($student_info[ 'intention_major' ]);
+		}
+		return $student->update($student_info);
 	}
 
 	/**
@@ -70,12 +125,22 @@ class StudentRepository
 	}
 
 	/**
+	 * @param array $array
+	 * @return string
+	 */
+	private function tranFormIntentionCollegeArrayToJson(array $array)
+	{
+		$major_data = serialize(json_encode($array));
+		return $major_data;
+	}
+
+	/**
 	 * @param string $string
 	 * @return string
 	 */
 	private function tranFormIntentionMajorJsonToString(string $string)
 	{
-		return json_decode(unserialize($string));
+		return implode('|' , unserialize($string));
 	}
 
 	/**

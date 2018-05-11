@@ -25,9 +25,9 @@
     <link rel="stylesheet" href="{{ asset('theme/vendor/flag-icon-css/flag-icon.css') }}">
 
     <!-- Pages -->
-@yield('page-css')
+    @yield('page-css')
 
-<!-- Fonts -->
+    <!-- Fonts -->
     <link rel="stylesheet" href="{{ asset('theme/fonts/web-icons/web-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/fonts/brand-icons/brand-icons.min.css') }}">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
@@ -110,13 +110,11 @@
 <script>
     (function (document, window, $) {
         'use strict';
-
         var Site = window.Site;
         $(document).ready(function () {
             Site.run();
         });
     })(document, window, jQuery);
 </script>
-
 </body>
 </html>
