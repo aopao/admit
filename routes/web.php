@@ -14,3 +14,7 @@
 Route::get('/' , function() {
 	return view('welcome');
 });
+
+include_once __DIR__ . '/agent.php';
+
+include_once __DIR__ . '/admin.php';

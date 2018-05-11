@@ -2,40 +2,63 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Http\Requests\StudentRequest;
+use App\Repositories\StudentRepository;
+use App\Repositories\ProvinceRepository;
 
-class StudentController extends Controller
+class StudentController extends BaseController
 {
+	private $student;
+
+	public function __construct(StudentRepository $studentRepository)
+	{
+		parent::__construct();
+		$this->student = $studentRepository;
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
+	 * @param Request $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		//
+		$key = $request->input('key');
+		if (isset($key)) {
+			$student_list = $this->student->getAllByQuery($key);
+		} else {
+			$student_list = $this->student->getAll();
+		}
+
+		return view('admins.student.index' , compact('student_list'));
 	}
 
 	/**
 	 * Show the form for creating a new resource.
 	 *
+	 * @param ProvinceRepository $provinceRepository
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create()
+	public function create(ProvinceRepository $provinceRepository)
 	{
-		//
+		# 获取省份列表
+		$province_list = $provinceRepository->getAll();
+		return view('admins.student.create' , compact('province_list'));
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request $request
-	 * @return \Illuminate\Http\Response
+	 * @param StudentRequest $studentRequest
+	 * @return void
 	 */
-	public function store(Request $request)
+	public function store(StudentRequest $studentRequest)
 	{
-		//
+		if ($this->student->store($studentRequest->all())) {
+			return redirect(route('admin.student.index'));
+		}
 	}
 
 	/**

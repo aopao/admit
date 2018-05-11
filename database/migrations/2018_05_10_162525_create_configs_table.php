@@ -20,6 +20,18 @@ class CreateConfigsTable extends Migration
 			$table->string('display_name')->nullable()->comment('明文识别文字');
 			$table->timestamps();
 		});
+		/** 插入初始化信息 **/
+		$this->inserInitData();
+	}
+
+	public function inserInitData()
+	{
+		$data = [
+			[ 'key' => 'web_name' , 'value' => '黑马高考' ] ,
+			[ 'key' => 'copyright' , 'value' => '黑马高考版权' ] ,
+			[ 'key' => 'login_message' , 'value' => '登录界面提示语句' ] ,
+		];
+		DB::table('configs')->insert($data);
 	}
 
 	/**

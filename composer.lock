@@ -4,8 +4,50 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0dc8d74e5ad39a357e0c657458f21387",
+    "content-hash": "7b7f68e3d3b426aeab18fa4859932a11",
     "packages": [
+        {
+            "name": "aopao/region",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aopao/region.git",
+                "reference": "8ed2c1d884022af235a286eda797689b20052b03"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/aopao/region/8ed2c1d884022af235a286eda797689b20052b03.zip",
+                "reference": "8ed2c1d884022af235a286eda797689b20052b03",
+                "shasum": ""
+            },
+            "require-dev": {
+                "laravel/framework": "5.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Aopao\\Region\\RegionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Aopao\\Region\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wujinyu",
+                    "email": "Admin@wujinyu.com"
+                }
+            ],
+            "time": "2018-04-26T04:52:36+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
