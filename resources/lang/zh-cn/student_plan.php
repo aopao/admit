@@ -37,5 +37,8 @@ return [
 	'options' => '输入方案基本信息' ,
 	'search_college' => '符合条件的院校专业列表' ,
 	'add_plan' => '加入方案' ,
+	'show_college'=>'已加入方案内院校专业列表',
+	'append_plan'=>'追加院校',
+	'edit'=>'编辑'
 ];
 

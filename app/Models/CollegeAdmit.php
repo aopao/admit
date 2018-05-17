@@ -11,5 +11,5 @@ use Illuminate\Database\Eloquent\Model;
  */
 class CollegeAdmit extends Model
 {
-    //
+	protected $table = 'college_admits';
 }

@@ -17,6 +17,9 @@ class StudentController extends BaseController
 	 * @var StudentRepository
 	 */
 	private $student;
+	/**
+	 * @var ProvinceRepository
+	 */
 	private $province;
 
 	/**
@@ -100,28 +103,39 @@ class StudentController extends BaseController
 		return view('admins.student.edit' , compact('' , 'student_info' , 'province_list'));
 	}
 
+
 	/**
-	 * Update the specified resource in storage.
-	 *
 	 * @param StudentRequest $studentRequest
 	 * @param $id
-	 * @return \Illuminate\Http\Response
+	 * @return bool|\Illuminate\Http\RedirectResponse
 	 */
 	public function update(StudentRequest $studentRequest , $id)
 	{
 		if ($this->student->update($studentRequest->all() , $id)) {
 			return redirect(route('admin.student.index'))->with('message' , '修改成功!');
+		} else {
+			return False;
 		}
 	}
 
 	/**
-	 * Remove the specified resource from storage.
 	 *
-	 * @param  \App\Models\Student $student
-	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy()
+	public function indesss()
 	{
-		//
+		echo "sdf";
+	}
+
+
+	/**
+	 * @param $student_id
+	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+	 * @throws \Exception
+	 */
+	public function destroy($student_id)
+	{
+		if ($this->student->destroy($student_id)) {
+			return redirect(route('admin.student.index'));
+		}
 	}
 }

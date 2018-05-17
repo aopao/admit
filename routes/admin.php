@@ -2,6 +2,7 @@
 /**
  * 后台管理路由
  */
+
 ##获取管理后台路径前缀##
 define('PREFIX' , config('admin.admin_prfix'));
 
@@ -26,11 +27,25 @@ Route::namespace('Admin')->prefix(PREFIX)->middleware('auth')->group(function() 
 		Route::get('{student_id}/plan/{plan_id}' , 'StudentPlanController@index')->name('admin.plan.index');
 		Route::post('{student_id}/plan/{plan_id}/create' , 'StudentPlanController@create')->name('admin.plan.create');
 		Route::get('{student_id}/plan/show/{plan_model_id}' , 'StudentPlanController@show')->name('admin.plan.show');
+		Route::get('{student_id}/plan/edit/{plan_model_id}' , 'StudentPlanController@edit')->name('admin.plan.edit');
+		Route::post('{student_id}/plan/update/{plan_model_id}' , 'StudentPlanController@update')->name('admin.plan.update');
+		Route::get('{student_id}/plan/destroy/{plan_model_id}' , 'StudentPlanController@destroy')->name('admin.plan.destroy');
 		Route::get('{student_id}/plan/{plan_model_id}/search' , 'StudentPlanController@search')->name('admin.plan.search');
+		Route::get('{student_id}/plan/{plan_model_id}/searchKnowScore' , 'StudentPlanController@searchKnowScore')->name('admin.plan.searchKnowScore');
+		Route::get('{student_id}/plan/{plan_model_id}/add_plan' , 'StudentPlanController@addPlan')->name('admin.plan.add');
+
 	});
 
 	/** 学生管理路由 **/
 	Route::resource('college' , 'CollegeController' , [ 'as' => 'admin' ]);
+
+	/** Mongo To Mysql路由 **/
+	Route::get('/mongo/' , 'TranformMongoToMysqlController@index')->name('mongo.index');
+	Route::get('/mongo/mm' , 'TranformMongoToMysqlController@mm')->name('mongo.mm');
+	Route::get('/mongo/college' , 'TranformMongoToMysqlController@collegeToMysql')->name('mongo.college');
+	Route::get('/mongo/category' , 'TranformMongoToMysqlController@collegeCategoryToMysql')->name('mongo.category');
+	Route::get('/mongo/category_to_mongo' , 'TranformMongoToMysqlController@collegeCategoryMysqlToMongo')->name('mongo.college_to');
+	Route::get('/mongo/admit' , 'TranformMongoToMysqlController@admitToMysql')->name('mongo.admit');
 
 
 //	## 用户管理路由##

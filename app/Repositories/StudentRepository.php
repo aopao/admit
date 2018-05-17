@@ -6,6 +6,7 @@ use App\Models\Student;
 
 /**
  * Class StudentRepository
+ *
  * @package App\Repositories
  */
 class StudentRepository
@@ -17,6 +18,7 @@ class StudentRepository
 
 	/**
 	 * StudentRepository constructor.
+	 *
 	 * @param $student $student
 	 */
 	public function __construct(Student $student)
@@ -24,12 +26,13 @@ class StudentRepository
 		$this->student = $student;
 	}
 
+
 	/**
-	 * @return \Illuminate\Database\Eloquent\Collection|static[]
+	 * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
 	 */
 	public function getAll()
 	{
-		return $this->student->all();
+		return $this->student->paginate(config('admin.page'));
 	}
 
 	/**
@@ -40,9 +43,9 @@ class StudentRepository
 	{
 		$keyword = '%' . $key . '%';
 		return $this->student->orwhere('name' , 'like' , $keyword)
-			->orWhere('mobile' , 'like' , $keyword)
-			->orWhere('card' , 'like' , $keyword)
-			->with([ 'province' , 'user' ])->paginate(config('admin.page'));
+							 ->orWhere('mobile' , 'like' , $keyword)
+							 ->orWhere('card' , 'like' , $keyword)
+							 ->with([ 'province' , 'user' ])->paginate(config('admin.page'));
 	}
 
 	/**
@@ -69,17 +72,21 @@ class StudentRepository
 	}
 
 
+	/**
+	 * @param $student_id
+	 * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed|null|static|static[]
+	 */
 	public function getStudentByIdWithProvinceAndUser($student_id)
 	{
 		return $this->student->with('province' , 'user')->find($student_id);
 	}
 
 	/**
-	 * @param $student_id
+	 * @param      $student_id
 	 * @param bool $slug
 	 * @return mixed|static
 	 */
-	public function isAvailable($student_id , $slug = false)
+	public function isAvailable($student_id , $slug = FALSE)
 	{
 		$student_info = $this->student->find($student_id);
 		if (!$student_info) {
@@ -99,7 +106,7 @@ class StudentRepository
 
 	/**
 	 * @param array $student_info
-	 * @param $id
+	 * @param       $id
 	 * @return bool
 	 */
 	public function update(array $student_info , $id)
@@ -112,6 +119,16 @@ class StudentRepository
 			$student_info[ 'intention_major' ] = $this->tranFormIntentionMajorStringToJson($student_info[ 'intention_major' ]);
 		}
 		return $student->update($student_info);
+	}
+
+	/**
+	 * @param $id
+	 * @return bool|null
+	 * @throws \Exception
+	 */
+	public function destroy($id)
+	{
+		return Student::destroy($id);
 	}
 
 	/**

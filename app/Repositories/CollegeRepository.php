@@ -37,9 +37,18 @@ class CollegeRepository
 	public function getAllByQuery($key)
 	{
 		$keyword = '%' . $key . '%';
-		return $this->college->orwhere('college_name' , 'like' , $keyword)
+		return $this->college->orwhere('﻿college_name' , 'like' , $keyword)
 			->with('province' , 'CollegeCategory')->paginate(config('admin.page'));
 	}
 
+	public function getById($college_id)
+	{
+		$college_info = $this->college->with('province' , 'CollegeCategory' , 'city')->find($college_id);
+		if (isset($college_info)) {
+			return $college_info;
+		} else {
+			abort(404);
+		}
+	}
 
 }

@@ -46,6 +46,8 @@ class LoginController extends BaseController
 	public function showLoginForm()
 	{
 		return view('admins.login.login');
+
+		
 	}
 
 

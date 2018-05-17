@@ -44,7 +44,7 @@
                                 @foreach($college_list as $college)
                                     <tr align="center">
                                         <td>{{ $college['id'] or ''}}</td>
-                                        <td>{{ $college['college_name'] or ''}}</td>
+                                        <td>{{ $college['﻿college_name'] }}</td>
                                         <td>{{ $college['province']['name'] or '未填写'}}</td>
                                         <td>{{ $college['CollegeCategory']['category_name'] or '未填写'}}</td>
                                         <td class="hidden-sm-down">{{ $college['created_at']  }}</td>

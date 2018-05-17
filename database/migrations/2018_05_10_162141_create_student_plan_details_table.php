@@ -15,8 +15,9 @@ class CreateStudentPlanDetailsTable extends Migration
 	{
 		Schema::create('student_plan_details' , function(Blueprint $table) {
 			$table->increments('id');
+			$table->integer('student_id')->index()->default(0)->index();
 			$table->integer('plane_id')->index()->default(0)->index();
-			$table->json('college_enum');
+			$table->string('admit_id');
 			$table->timestamps();
 		});
 	}

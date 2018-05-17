@@ -1,9 +1,6 @@
 @extends('layouts.layout')
 @section('page-css')
-    <link rel="stylesheet" href="{{ asset('theme/vendor/formvalidation/formValidation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendor/icheck/icheck.css') }}">
-    <link rel="stylesheet" href="{{ asset('theme/vendor/bootstrap-datepicker/bootstrap-datepicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('theme/css/forms/validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendor/select2/select2.css') }}">
 @endsection
 @section('content')
@@ -82,11 +79,8 @@
 @section('page-js')
     <script src="{{ asset('theme/vendor/select2/select2.full.min.js') }}"></script>
     <script src="{{ asset('theme/vendor/icheck/icheck.min.js') }}"></script>
-    <script src="{{ asset('theme/vendor/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
     <script>
-        $("#datepicker").datepicker({format: 'yyyy-mm-dd'});
-        //TODO
-        //省份+城市
+
     </script>
     <script src="{{ asset('theme/js/Student/app.js') }}"></script>
 

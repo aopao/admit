@@ -180,6 +180,7 @@ return [
 		Barryvdh\Debugbar\ServiceProvider::class,
 		Aopao\Region\RegionServiceProvider::class,
 		App\Providers\ComposerServiceProvider::class,
+		Jenssegers\Mongodb\MongodbServiceProvider::class,
 
     ],
 
@@ -229,7 +230,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+		'Mongo'     => Jenssegers\Mongodb\MongodbServiceProvider::class,
     ],
 
 ];

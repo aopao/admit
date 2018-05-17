@@ -24,7 +24,7 @@
                         <ul class="nav nav-tabs nav-tabs-line" role="tablist">
                             <li class="nav-item" role="presentation"><a class="nav-link active">@lang('student.student_info')</a></li>
                             <li class="nav-item" role="presentation"><a class="nav-link" href="{{ route('admin.plan.index',['student_id'=>$student_info['id'],'plane_id'=>config('plan.college_scheme.id')]) }}" aria-controls="info" role="tab">{{ config('plan.college_scheme.title') }}</a></li>
-                            <li class="nav-item" role="presentation"><a class="nav-link" href="{{ route('admin.plan.index',['student_id'=>$student_info['id'],'plane_id'=>config('plan.estimate_score_scheme.id')]) }}" aria-controls="info" role="tab">{{ config('plan.estimate_score_scheme.title') }}</a></li>
+                            {{--<li class="nav-item" role="presentation"><a class="nav-link" href="{{ route('admin.plan.index',['student_id'=>$student_info['id'],'plane_id'=>config('plan.estimate_score_scheme.id')]) }}" aria-controls="info" role="tab">{{ config('plan.estimate_score_scheme.title') }}</a></li>--}}
                             <li class="nav-item" role="presentation"><a class="nav-link" href="{{ route('admin.plan.index',['student_id'=>$student_info['id'],'plane_id'=>config('plan.knowledge_score_scheme.id')]) }}" aria-controls="info" role="tab">{{ config('plan.knowledge_score_scheme.title') }}</a></li>
                         </ul>
                         <div class="tab-content">
@@ -354,12 +354,12 @@
                                          <span class="mr-15">
                                               <input type="checkbox" disabled class="icheckbox-primary ml-15" id="ProvinceAll" @if($student_info['intention_college'][0] == 0)) checked @endif  name="intention_college[]" data-plugin="iCheck" data-checkbox-class="icheckbox_flat-blue" value="0"/>
                                               <label for="ProvinceAll" class="ml--1 pb-15">@lang('form.all_province')</label>
-                                             @if(isset($province_list))
+                                             @if(isset($province_list) && isset($student_info['intention_college']))
                                                  @foreach($province_list as $province)
                                                      <span class="mr-15">
-                                                                          <input type="checkbox" @if(in_array($province['id'],$student_info['intention_college'])) checked @endif disabled class="icheckbox-primary ml-15" id="ProvinceList" name="intention_college[]" data-plugin="iCheck" data-checkbox-class="icheckbox_flat-blue" value="{{ $province['id'] }}"/>
-                                                                          <label for="ProvinceList" class="ml--1 pb-15">{{ $province['name'] }}</label>
-                                                                    </span>
+                                                              <input type="checkbox" @if(in_array($province['id'],$student_info['intention_college'])) checked @endif disabled class="icheckbox-primary ml-15" id="ProvinceList" name="intention_college[]" data-plugin="iCheck" data-checkbox-class="icheckbox_flat-blue" value="{{ $province['id'] }}"/>
+                                                              <label for="ProvinceList" class="ml--1 pb-15">{{ $province['name'] }}</label>
+                                                            </span>
                                                             @endforeach
                                                             @endif
                                                         </div>
