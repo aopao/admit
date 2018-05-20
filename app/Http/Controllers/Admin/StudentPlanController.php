@@ -49,11 +49,11 @@ class StudentPlanController extends BaseController
 		
 	}
 	
-
+	
 	/**
 	 * @param $student_id
 	 * @param $plan_id
-	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 * @return bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
 	public function index($student_id , $plan_id)
 	{
@@ -63,6 +63,7 @@ class StudentPlanController extends BaseController
 			return view('admins.plan.index' , compact('plan_list' , 'student_info' , 'plan_id'));
 		} else {
 			abort(404);
+			return FALSE;
 		}
 	}
 
@@ -100,6 +101,7 @@ class StudentPlanController extends BaseController
 			/**估分方案**/
 			case 2:
 				abort(404);
+				break;
 			/**知分方案**/
 			case 3:
 				if ($plan_detail[ 'is_save' ]) {
@@ -125,20 +127,30 @@ class StudentPlanController extends BaseController
 		$data[ 'ids' ] = $request->input('ids');
 		return $this->student_plan_detail->addByIds($data);
 	}
-
+	
+	/**
+	 * @param         $student_id
+	 * @param         $plan_model_id
+	 * @param Request $request
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
 	public function edit($student_id , $plan_model_id , Request $request)
 	{
 		$plan_info = $this->student_plan->getInfoById($plan_model_id);
 		return view('admins.plan.edit' , compact('plan_info'));
 	}
-
+	
+	/**
+	 * @param Request $request
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
 	public function update(Request $request)
 	{
 		if ($this->student_plan->update($request->all())) {
 			return redirect(route('admin.plan.index' , [ 'student_id' => $request->input('student_id') , 'plan_id' => $request->input('plan_id') ]))
 				->with('delete_message' , '修改成功!');
 		} else {
-			return redirect(route('admin . plan . index' , [ 'student_id' => $request->input('student_id') , 'plan_id' => $request->input('plan_id') ]))
+			return redirect(route('admin.plan.index' , [ 'student_id' => $request->input('student_id') , 'plan_id' => $request->input('plan_id') ]))
 				->with('delete_message' , '修改失败!');
 		}
 	}
@@ -153,7 +165,7 @@ class StudentPlanController extends BaseController
 	{
 		$plan_id = $this->student_plan->destory($plan_model_id);
 		if ($plan_id) {
-			return redirect(route('admin . plan . index' , [ 'student_id' => $student_id , 'plan_id' => $plan_id ]))->with('delete_message' , '删除成功!');
+			return redirect(route('admin.plan.index' , [ 'student_id' => $student_id , 'plan_id' => $plan_id ]))->with('delete_message' , '删除成功!');
 		}
 	}
 
@@ -199,10 +211,10 @@ class StudentPlanController extends BaseController
 				return redirect()->back()->with('message' , '高考分数请正确填写');
 			}
 			$admit_lists = $this->student_plan->searchMongoKnowScoreCollege($student_id , $plan_model_id , $request->all());
-			return view('admins . plan . mlist' , compact('admit_lists' , 'student_id' , 'plan_model_id' , 'query_params'));
+			return view('admins.plan.mlist' , compact('admit_lists' , 'student_id' , 'plan_model_id' , 'query_params'));
 		} else {
 			$admit_lists = $this->student_plan->searchCollege($student_id , $plan_model_id , $request->all());
-			return view('admins . plan . list' , compact('admit_lists' , 'student_id' , 'plan_model_id' , 'query_params'));
+			return view('admins.plan.list' , compact('admit_lists' , 'student_id' , 'plan_model_id' , 'query_params'));
 		}
 	}
 

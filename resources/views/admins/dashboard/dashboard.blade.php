@@ -1,15 +1,15 @@
 @extends('layouts.layout')
 @section('content')
     <div class="page-header">
-        <h1 class="page-title">Menu Collapsed</h1>
+        <h1 class="page-title">黑马高考填报系统后台管理</h1>
     </div>
     <div class="page-content">
         <div class="panel">
             <div class="panel-heading">
-                <h3 class="panel-title">DEMO CONTENT</h3>
+                <h3 class="panel-title">欢迎使用黑马高考填报系统</h3>
             </div>
             <div class="panel-body">
-                <p>Liberatione</p>
+                <p></p>
             </div>
         </div>
     </div>

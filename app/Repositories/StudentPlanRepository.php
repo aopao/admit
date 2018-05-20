@@ -8,13 +8,13 @@
 
 namespace App\Repositories;
 
-use App\Models\StudentPlanDetail;
 use DB;
 use Cache;
 use Auth;
 use App\Models\College;
-use App\Models\CollegeAdmit;
 use App\Models\StudentPlan;
+use App\Models\CollegeAdmit;
+use App\Models\StudentPlanDetail;
 
 /**
  * Class StudentPlanRepository
@@ -70,7 +70,6 @@ class StudentPlanRepository
 	}
 	
 	/**
-	 * @param $student_id
 	 * @param $plan_model_id
 	 * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed|null|static|static[]
 	 */
